@@ -55,7 +55,6 @@ class Solution {
         que.addFirst(sr * m + sc);
         vis[sr][sc] = true;
         int[][] dir = { { 0, 1 }, { 1, 0 }, { -1, 0 }, { 0, -1 } };
-        int len = Math.max(n, m);
         while (que.size() != 0) {
             int size = que.size();
             while (size-- > 0) {
@@ -70,6 +69,9 @@ class Solution {
                         r += d[0];
                         c += d[1];
                     }
+
+                    r -= d[0];
+                    c -= d[1];
 
                     if (vis[r][c])
                         continue;
