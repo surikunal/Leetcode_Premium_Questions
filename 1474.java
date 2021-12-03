@@ -1,17 +1,18 @@
 class Solution {
     public ListNode deleteNodes(ListNode head, int m, int n) {
-        ListNode curr = head, lastMNode = head;
+        int tm = m, tn = n;
+        ListNode curr = head, h1 = head;
         while (curr != null) {
-            int tempM = m;
-            while (curr != null && tempM-- != 0) {
-                lastMNode = curr;
+            int tempm = m;
+            while (curr != null && tempm-- != 0) {
+                h1 = curr;
                 curr = curr.next;
             }
-            int tempN = n;
-            while (curr != null && tempN-- != 0) {
+            int tempn = n;
+            while (curr != null && tempn-- != 0) {
                 curr = curr.next;
             }
-            tempM.next = curr;
+            h1.next = curr;
         }
         return head;
     }
