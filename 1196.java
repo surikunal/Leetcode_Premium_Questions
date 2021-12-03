@@ -1,14 +1,12 @@
-import java.util.Arrays;
 class Solution {
-    public int maxNumberOfApples(int[] arr) {
-        Arrays.sort(arr);
-        int sum = 0;
-        int count = 0;
-        for (int val: arr) {
-            sum += val;
-            count++;
+    public int maxNumberOfApples(int[] weight) {
+        Arrays.sort(weight);
+        int sum = 0, count = 0;
+        for (int i: weight) {
+            sum += i;
             if (sum > 5000) return count;
+            count++;
         }
-        return 0;
+        return count;
     }
 }
