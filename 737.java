@@ -1,48 +1,21 @@
 // leetcode 737
-import java.util.Map;
-import java.util.HashMap;
-public class sentenseSimilarity2 {
-    public static String find(Map<String, String> map, String i) {
-        if (!map.containsKey(i)) {
-            return i;
+class Solution {
+    // union find
+    public boolean areSentencesSimilarTwo(String[] sentence1, String[] sentence2, List<List<String>> similarPairs) {
+        int n = sentence1.length, m = sentence2.length;
+        if (n != m) return false;
+        HashMap<String, String> par = new HashMap<String, String>();
+        for (List<String> s: similarPairs) {
+            String par1 = findPar(s.get(0), par), par2 = findPar(s.get(1), par);
+            if (!par1.equals(par2)) par.put(par1, par2);
         }
-        if (!i.equals(map.get(i))) {
-            i = map.get(i);
-        }
-        return i;
-    }
-    public static void unionFind(Map<String, String> map, String i, String j) {
-        String par1 = find(map, i);
-        String par2 = find(map, j);
-        map.put(par1, par2);
-    }
-    public static boolean areSentenseSimilar2(String[] words1, String[] words2, String[][] pairs) {
-        if (words1.length != words2.length)
-            return false;
-        
-        // this is simply a map which is used same as parent array
-        Map<String, String> map = new HashMap<>();
-        for (String[] pair: pairs) {
-            if (!map.containsKey(pair[0])) {
-                map.put(pair[0], pair[0]);
-            }
-            if (!map.containsKey(pair[1])) {
-                map.put(pair[1], pair[1]);
-            }
-            unionFind(map, pair[0], pair[1]);
-        }
-        for (int i = 0; i < words1.length; ++i) {
-            String par1 = find(map, words1[i]);
-            String par2 = find(map, words2[i]);
-            if (par1 != par2)
-                return false;
-        }
+        for (int i = 0; i < n; ++i)
+            if (!sentence1[i].equals(sentence2[i]) && !findPar(sentence1[i], par).equals(findPar(sentence2[i], par))) return false;
         return true;
     }
-    public static void main(String[] args) {
-        String[] words1 = {"great", "acting", "skills"};
-        String[] words2 = {"fine", "drama", "talent"};
-        String[][] pairs = {{"great", "good"}, {"fine", "good"}, {"acting","drama"}, {"skills","talent"}};
-        System.out.println(areSentenseSimilar2(words1, words2, pairs));
+    
+    public String findPar(String str, HashMap<String, String> par) {
+        if (!par.containsKey(str)) par.put(str, str);
+        return str.equals(par.get(str)) ? str : findPar(par.get(str), par);
     }
 }
