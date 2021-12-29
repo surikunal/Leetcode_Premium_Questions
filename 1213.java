@@ -1,26 +1,19 @@
-import java.util.List;
 class Solution {
     public List<Integer> arraysIntersection(int[] arr1, int[] arr2, int[] arr3) {
-        List<Integer> ans = new ArrayList<>();
         int i = 0, j = 0, k = 0;
+        List<Integer> ans = new ArrayList<Integer>();
         while (i < arr1.length && j < arr2.length && k < arr3.length) {
-            int num1 = arr1[i], num2 = arr2[j], num3 = arr3[k];
-            if (num1 == num2 && num3 == num1) {
-                ans.add(num1);
+            int n1 = arr1[i], n2 = arr2[j], n3 = arr3[k];
+            if (n1 == n2 && n2 == n3) {
+                ans.add(n1);
                 i++;
                 j++;
                 k++;
+                System.out.print(n1 + " ");
             } else {
-                int inc1 = 0, inc2 = 0, inc3 = 0;
-                if (num1 < num2 || num1 < num3)
-                    inc1 = 1;
-                if (num2 < num1 || num2 < num3)
-                    inc2 = 1;
-                if (num3 < num1 || num3 < num1)
-                    inc3 = 1;
-                i += inc1;
-                j += inc2;
-                k += inc3;
+                if (n1 < n2 || n1 < n3) i++;
+                if (n2 < n1 || n2 < n3) j++;
+                if (n3 < n1 || n3 < n2) k++;
             }
         }
         return ans;
