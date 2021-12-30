@@ -26,9 +26,8 @@ class Solution {
         Node ans = null;
         if (root != null) {
             ans = new Node(root.val);
-            for (Node child: children) {
+            for (Node child: root.children)
                 ans.children.add(cloneTree(child));
-            }
         }
         return ans;
     }
