@@ -1,6 +1,39 @@
-import java.util.PriorityQueue;
-import java.util.Arrays;
+// without comparator =====================================================================
+class Solution {
+    public int shortestDistance(int[][] maze, int[] start, int[] dest) {
+        int n = maze.length, m = maze[0].length, sr = start[0], sc = start[1], er = dest[0], ec = dest[1];
+        PriorityQueue<int[]> que = new PriorityQueue<>((int[] a, int[] b)->{
+            return a[2] - b[2];
+        });
+        que.add(new int[]{sr, sc, 0});
+        int[][] dis = new int[n][m];
+        dis[sr][sc] = 0;
+        int[][] dir = {{0, 1}, {1, 0}, {-1, 0}, {0, -1}};
+        for (int[] d: dis) Arrays.fill(d, (int)1e8);
+        while (que.size() > 0) {
+            int[] rem = que.remove();
+            int i = rem[0], j = rem[1], len = rem[2];
+            for (int[] d: dir) {
+                int x = i, y = j, l = len;
+                while (x >= 0 && y >= 0 && x < n && y < m && maze[x][y] == 0) {
+                    x += d[0];
+                    y += d[1];
+                    l++;
+                }
+                x -= d[0];
+                y -= d[1];
+                --l;
+                if (l < dis[x][y]) {
+                    dis[x][y] = l;
+                    que.add(new int[]{x, y, l});
+                }
+            }
+        }
+        return dis[er][ec] == (int)1e8 ? -1 : dis[er][ec];
+    }
+}
 
+// with comparator =====================================================================
 class Solution {
     public int shortestDistance(int[][] maze, int[] start, int[] destination) {
         int n = maze.length, m = maze[0].length, sr = start[0], sc = start[1], er = destination[0], ec = destination[1];
